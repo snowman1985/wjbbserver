@@ -1,4 +1,5 @@
 from django.db import models
+import dbarray
 
 # Create your models here.
 
@@ -15,3 +16,8 @@ class Knowledge(models.Model):
 class KnowledgeCollection(models.Model):
     user_id = models.IntegerField(10,null=True)
     collection_list = models.CharField(max_length=20000,null=True)
+
+class PushInfo(models.Model):
+    user_id = models.IntegerField(10)
+    knowledge_info = dbarray.IntegerArrayField(null=True)
+    merchant_info = dbarray.IntegerArrayField(null=True)
