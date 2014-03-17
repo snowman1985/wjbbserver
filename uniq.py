@@ -30,8 +30,18 @@ if __name__ == "__main__":
     print baby
     print baby.name
     parentid = baby.parent_id
+    crossage = False
     age = (int)((date.today() - baby.birthday).days)
     #knowls = Knowledge.objects.filter(max__gte = age, min__lte = age)
+    if crossage:
+      newknowls = Knowledge.objects.filter(max__gte = age, min__lte = age)
+      try:
+        info = PushInfo.objects.get(user_id=key)
+        info.knowledge_info = [knowl.id for knowl in newknowls]
+        info.save
+      except PushInfo.DoesNotExist:
+        pass
+      continue 
     knowls = knowlqueryset.filter(max__gte = age, min__lte = age)
     userknowls = user_pushinfo_dict.setdefault(parentid,set())
     
@@ -39,7 +49,16 @@ if __name__ == "__main__":
     #PushInfo.objects.create(user_id=parentid, knowledge_info=knowl_ids)
 
   for key, value in user_pushinfo_dict.iteritems():
-    PushInfo.objects.create(user_id=key, knowledge_info=list(value))
+    try:
+      info = PushInfo.objects.get(user_id=key)
+      newvalue = info.knowledge_info + list(value)
+      info.save(newvalue)
+    except PushInfo.DoesNotExist:
+      PushInfo.objects.create(user_id=key, knowledge_info=list(value))
+    except PushInfo.MultipleObjectsReturned:
+      print "multiple object"
+      PushInfo.objects.filter(user_id=key).delete()
+      PushInfo.objects.create(user_id=key, knowledge_info=list(value))
 
 
   for i in PushInfo.objects.all():
