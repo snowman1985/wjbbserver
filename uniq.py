@@ -32,6 +32,13 @@ if __name__ == "__main__":
     parentid = baby.parent_id
     crossage = False
     age = (int)((date.today() - baby.birthday).days)
+
+    if age > 3*365:
+      if age % 365 == 0:
+        crossage = True
+    else:
+      if age % 30 == 0:
+        crossage = True
     #knowls = Knowledge.objects.filter(max__gte = age, min__lte = age)
     if crossage:
       newknowls = Knowledge.objects.filter(max__gte = age, min__lte = age)
