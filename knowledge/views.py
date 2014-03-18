@@ -27,8 +27,12 @@ def getknowllist(request):
     else:
         baby = Baby.objects.get(parent_id=user.id)
         age= int((date.today() - baby.birthday).days)
+
+        pushinfo = PushInfo.objects.get(user_id=user.id)
+        knids = [info for info in pushinfo.knowledge_info]
+        knowls = [Knowledge.objects.get(id=curid) for curid in knids] 
         
-        knowls = Knowledge.objects.filter(max__gte = age, min__lte = age)
+        #knowls = Knowledge.objects.filter(max__gte = age, min__lte = age)
         count = knowls.count()
         
         if number >= count:
