@@ -37,9 +37,14 @@ def getknowllist(request):
         
         if number >= count:
             response = knowledges_encode(list(knowls))
+            pushinfo.knowledge_info = []
+            pushinfo.save() 
         else:
             import random
             response = knowledges_list_encode(random.sample(list(knowls), number))
+            newknowlsids = knids[number:]
+            pushinfo.knowledge_info = newknowlsids
+            pushinfo.save() 
     return HttpResponse(response)
 
 def knowledges_list_encode(knowls):
