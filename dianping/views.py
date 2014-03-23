@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.http import *
 from baby.models import Baby
@@ -10,7 +11,8 @@ import base64
 import sys
 import hashlib
 import urllib
-from urllib.request import urlopen
+#from urllib.request import urlopen
+from urllib2 import urlopen
 from utils.users import *
 # Create your views here.
 

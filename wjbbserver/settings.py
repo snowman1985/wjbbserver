@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'baby',
     'knowledge',
+    'weather',
 )
 
 MIDDLEWARE_CLASSES = (
